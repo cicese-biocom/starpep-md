@@ -31,22 +31,24 @@ public class ComputeBatch {
 
     int[] batchSizes = getBatchSize();
     int startPos = 0;
-    for (int size : batchSizes) {
-      int lastPos = Math.min(startPos + size, numberOfTasks);
-      List<Callable<Void>> batch = tasks.subList(startPos, lastPos);
-      List<Future<Void>> futuresBatch = new ArrayList<>();
-      try {
+    List<Future<Void>> futuresBatch = new ArrayList<>();
+    try {
+      for (int size : batchSizes) {
+        int lastPos = Math.min(startPos + size, numberOfTasks);
+        List<Callable<Void>> batch = tasks.subList(startPos, lastPos);
+        futuresBatch = new ArrayList<>();
+
         futuresBatch = executorService.invokeAll(batch);
         futures.addAll(futuresBatch);
         for (Future<Void> future : futuresBatch) {
           future.get();
         }
-      } catch (Exception e) {
-        cancelAll(futuresBatch);
-        Thread.currentThread().interrupt();
-        throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
+        startPos += size;
       }
-      startPos += size;
+    } catch (Exception e) {
+      cancelAll(futuresBatch);
+      Thread.currentThread().interrupt();
+      throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
     }
   }
 
