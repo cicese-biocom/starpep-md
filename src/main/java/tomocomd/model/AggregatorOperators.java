@@ -165,8 +165,8 @@ public class AggregatorOperators {
       type = "CHOQUET";
     }
     if (type == null)
-        throw StartpepException.ExceptionType.INVALID_AGGREGATOR_OPERATOR.get(
-            "Invalid aggregator operator code: " + code);
+      throw StartpepException.ExceptionType.INVALID_AGGREGATOR_OPERATOR.get(
+          "Invalid aggregator operator code: " + code);
   }
 
   public String getCode() {

@@ -26,8 +26,31 @@ public class ComputeBatch {
     this.numberOfTasks = peptidesNumber * headingsSize;
   }
 
-  public void computeInBatch(List<Peptide> peptides, List<String> headings)
-      throws InterruptedException {
+  public void computeInBatch(List<Peptide> peptides, List<String> headings) {
+    List<Callable<Void>> tasks = getCallables(peptides, headings);
+
+    int[] batchSizes = getBatchSize();
+    int startPos = 0;
+    for (int size : batchSizes) {
+      int lastPos = Math.min(startPos + size, numberOfTasks);
+      List<Callable<Void>> batch = tasks.subList(startPos, lastPos);
+      List<Future<Void>> futuresBatch = new ArrayList<>();
+      try {
+        futuresBatch = executorService.invokeAll(batch);
+        futures.addAll(futuresBatch);
+        for (Future<Void> future : futuresBatch) {
+          future.get();
+        }
+      } catch (Exception e) {
+        cancelAll(futuresBatch);
+        Thread.currentThread().interrupt();
+        throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
+      }
+      startPos += size;
+    }
+  }
+
+  private List<Callable<Void>> getCallables(List<Peptide> peptides, List<String> headings) {
     List<Callable<Void>> tasks = new ArrayList<>();
 
     for (int i = 0; i < peptides.size(); i++) {
@@ -42,24 +65,7 @@ public class ComputeBatch {
             });
       }
     }
-
-    int[] batchSizes = getBatchSize();
-    int startPos = 0;
-    for (int size : batchSizes) {
-      int lastPos = Math.min(startPos + size, numberOfTasks);
-      List<Callable<Void>> batch = tasks.subList(startPos, lastPos);
-      List<Future<Void>> futuresBatch = executorService.invokeAll(batch);
-      for (Future<Void> future : futuresBatch) {
-        try {
-          future.get();
-        } catch (Exception e) {
-          cancelAll(futuresBatch);
-          Thread.currentThread().interrupt();
-          throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
-        }
-      }
-      startPos += size;
-    }
+    return tasks;
   }
 
   public int[] getBatchSize() {
@@ -112,14 +118,6 @@ public class ComputeBatch {
   public void cancelAll(List<Future<Void>> futures) {
     for (Future<Void> future : futures) {
       future.cancel(true);
-    }
-  }
-
-  public void interruptExecution(List<Future<Double>> futures) {
-    for (Future<Double> future : futures) {
-      if (!future.isDone()) {
-        future.cancel(true);
-      }
     }
   }
 }

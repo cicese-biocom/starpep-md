@@ -112,7 +112,7 @@ public class ComputeMD {
     for (String heading : headers) {
       try {
         double value = ComputeMD.compute(p, heading);
-        logger.log(Level.INFO, "{0}:{1}={2}", new Object[]{cont++, heading, value});
+        logger.log(Level.INFO, "{0}:{1}={2}", new Object[] {cont++, heading, value});
       } catch (Exception e) {
         logger.log(Level.INFO, "heading {} not valid", heading);
         System.exit(-1);
