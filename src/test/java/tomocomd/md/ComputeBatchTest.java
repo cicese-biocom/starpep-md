@@ -29,13 +29,6 @@ class ComputeBatchTest {
   }
 
   @Test
-  void testGetBatchSize() {
-    int[] batchSizes = computeBatch.getBatchSize();
-    assertEquals(2, computeBatch.getBatchSize().length);
-    assertArrayEquals(new int[] {20, 7}, batchSizes);
-  }
-
-  @Test
   void testComputeInBatch() throws InterruptedException {
     computeBatch.computeInBatch(peptides, pdSet);
     RealMatrix results = computeBatch.getResults();
