@@ -16,7 +16,7 @@
                 </repository>
                 <repository>
                     <id>github</id>
-                    <url>https://maven.pkg.github.com/cicese-biocom/startped-md/</url>
+                    <url>https://maven.pkg.github.com/cicese-biocom/startpep-md/</url>
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>

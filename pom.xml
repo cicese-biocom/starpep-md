@@ -21,7 +21,7 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/cicese-biocom/startped-md</url>
+            <url>https://maven.pkg.github.com/cicese-biocom/startpep-md</url>
         </repository>
     </distributionManagement>
 
