@@ -49,6 +49,12 @@ public class ComputeBatch {
       cancelAll(futuresBatch);
       Thread.currentThread().interrupt();
       throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
+    } finally {
+      try {
+        shutdown();
+      } catch (InterruptedException e) {
+        throw StartpepException.ExceptionType.COMPUTE_MD_EXCEPTION.get(e);
+      }
     }
   }
 

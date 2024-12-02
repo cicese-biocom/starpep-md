@@ -14,8 +14,8 @@ import tomocomd.model.Peptide;
 import tomocomd.model.PeptideContainer;
 
 /** Hello world! */
-public class App {
-  private static final Logger logger = Logger.getLogger(App.class.getName());
+public class StartPep {
+  private static final Logger logger = Logger.getLogger(StartPep.class.getName());
 
   public static void main(String[] args) throws Exception {
 
