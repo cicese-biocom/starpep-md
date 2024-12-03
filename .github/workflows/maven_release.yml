@@ -101,6 +101,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Set local dependencies
+        run: |
+          mkdir -p $HOME/.m2
+          cp  $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml $HOME/.m2/settings.xml
+
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -e -X -s $HOME/.m2/settings.xml
         env:
