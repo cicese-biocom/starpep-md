@@ -19,9 +19,9 @@
 
     <distributionManagement>
         <repository>
-            <id>startpep-md-github</id>
+            <id>starpep-md-github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/cicese-biocom/startpep-md</url>
+            <url>https://maven.pkg.github.com/cicese-biocom/starpep-md</url>
         </repository>
     </distributionManagement>
 
@@ -180,7 +180,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>startpep-md-${version}</finalName>
+                    <finalName>starpep-md-${version}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
