@@ -90,13 +90,13 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: startpep-md-${{ env.new_version }}.jar
-          path: target/startpep-md-${{ env.new_version }}.jar
+          name: starpep-md-${{ env.new_version }}.jar
+          path: target/starpep-md-${{ env.new_version }}.jar
 
       - name: Create a GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/startpep-md-${{ env.new_version }}.jar
+          files: target/starpep-md-${{ env.new_version }}.jar
           tag_name: "v${{ env.new_version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
